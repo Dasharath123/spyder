@@ -1,0 +1,43 @@
+# create the docker image
+docker build -t spyder .
+
+# run the container locally
+docker run -d --name spyder -p 9096:3389 spyder
+
+# push the docker to acr
+# login to acr
+docker login bnlwees01d57280lmpocacr.azurecr.io
+
+# tag the image
+docker tag spyder-xrdp bnlwees01d57280lmpocacr.azurecr.io/spyder-xrdp
+
+# list the local images
+docker images
+
+#push image to registry
+docker push bnlwees01d57280lmpocacr.azurecr.io/spyder-xrdp
+
+# azure login
+az login
+
+# get AKS credentails
+az aks get-credentials -g bnlwe-es01-d-57280-devl-rg -n bnlwe-es01-d-57280-aks-08-matlab
+
+# create the deployment and service
+kubectl apply -f storageClass.yaml
+kubectl apply -f PersistentVolumeClaim.yaml
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+
+# port forward
+kubectl port-forward spyder-xrdp-7b5d9f5ff9-qhnj2 19096:3389
+
+# scale down the deployment
+kubectl scale deployment.v1.apps/spyder-xrdp --replicas=0
+
+
+b9f962f6-e57b-4630-8a31-a1c7835645ad
+cd355bd1-44d8-4131-998c-f74ef197ac70
+
+bdb914e6-6eed-4893-9389-50f3861426bb
+bc1d4322-dd75-4d87-8b41-236d694ff707
