@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Spyder
+Icon=/opt/conda/share/icons/spyder.png
+Exec=/opt/conda/bin/spyder
+Categories=Development;
+Name[en_US]=Spyder
